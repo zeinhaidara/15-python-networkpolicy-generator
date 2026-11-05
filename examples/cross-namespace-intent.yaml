@@ -1,0 +1,14 @@
+# two services in different namespaces, and one rule with no port restriction
+services:
+  - name: gateway
+    namespace: edge
+    selector:
+      app: gateway
+  - name: billing
+    namespace: payments
+    selector:
+      app: billing
+
+rules:
+  - from: gateway
+    to: billing
