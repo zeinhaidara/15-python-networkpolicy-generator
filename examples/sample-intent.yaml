@@ -1,0 +1,26 @@
+# describes the allowed traffic between three services in the "shop" namespace
+services:
+  - name: frontend
+    namespace: shop
+    selector:
+      app: frontend
+  - name: backend
+    namespace: shop
+    selector:
+      app: backend
+  - name: database
+    namespace: shop
+    selector:
+      app: database
+
+rules:
+  - from: frontend
+    to: backend
+    ports:
+      - port: 8080
+        protocol: TCP
+  - from: backend
+    to: database
+    ports:
+      - port: 5432
+        protocol: TCP
