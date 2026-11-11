@@ -1,4 +1,4 @@
-# networkpolicy-generator
+# NetworkPolicy generator
 
 A Python CLI that turns a small YAML "intent" file — which services exist and
 which ones are allowed to talk to which, on what ports — into Kubernetes
@@ -100,7 +100,7 @@ YAML, and running the tool never mutates the intent file or any existing
 output directory contents beyond overwriting the policy files it's about to
 regenerate.
 
-## Tests
+## Validation
 
 ```bash
 pip install -r requirements-test.txt
