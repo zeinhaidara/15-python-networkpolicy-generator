@@ -4,6 +4,10 @@ A Python CLI that turns a small YAML "intent" file — which services exist and
 which ones are allowed to talk to which, on what ports — into Kubernetes
 `NetworkPolicy` YAML.
 
+Why it matters: hand-written NetworkPolicies are long, easy to get subtly
+wrong, and hard to review. A short intent file says who may talk to whom,
+and the tool turns it into the same policies every time.
+
 **Scope.** This is a pure text generator: it reads an intent file and writes
 YAML, either to stdout or to a directory of files. It never talks to a
 cluster, never calls `kubectl apply`, and has no Kubernetes client
@@ -111,3 +115,12 @@ Tests cover valid and invalid intent files (unknown service references,
 duplicate names, invalid ports/protocols), cross-namespace rules, the
 rule-less "deny all" case, `--default-deny`, and the `--output-dir` CLI path.
 No cluster or network access is required.
+
+## Known limitations
+
+- Peers are services from the intent file only. There is no `ipBlock`
+  support, so traffic to or from outside the cluster can't be expressed.
+- Egress policies contain only the rules you write. DNS (port 53 to the
+  cluster DNS service) is blocked unless the intent file allows it.
+- Never applied to a real cluster; whether a CNI enforces the policies as
+  intended is not tested.
